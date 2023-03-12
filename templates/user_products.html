@@ -1,0 +1,179 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+
+<!-- sidebar panel -->
+
+
+
+
+
+
+<!-- Ec product page -->
+<section class="ec-page-content section-space-p">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-12 side-bar order-2 order-lg-1">
+                <div class="widget">
+                    <div class="widget-title">
+                        <h5>Categories</h5>
+
+                        {% for i in categories %}
+                        <div id="accordion" class="accordion-style2">
+                            <div class="card">
+                                <div class="card-header" id="headingOne">
+                                    <h5 class="mb-0">
+                                        <button class="btn btn-link" data-bs-toggle="collapse"
+                                            data-bs-target="#collapseOne" aria-expanded="true"
+                                            aria-controls="collapseOne">{{i.category_name}}</button>
+                                    </h5>
+                                </div>
+                                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                    data-bs-parent="#accordion">
+                                    <div class="card-body">
+                                        {% for j in sub_categories %}
+                                        <ul class="list-unstyled">
+                                            <li><a
+                                                    href="{% url 'products_by_sub_category' j.slug %}">{{j.sub_category_name}}</a>
+                                            </li>
+
+                                        </ul>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+            <!-- Compare Content Start -->
+            <div class="ec-wish-rightside col-lg-12 col-md-12">
+                <!-- Compare content Start -->
+                <div class="ec-compare-content">
+                    <div class="ec-compare-inner">
+                        <div class="row margin-minus-b-30">
+                            <div class="section-title">
+
+                                <h2 class="ec-title">Our Top Collection</h2>
+                                <p class="sub-title">Browse The Collection of Top Products</p>
+                            </div>
+
+
+                            {% if products %}
+                            {% for i in products %}
+                            <div class="col-lg-3 col-md-4 col-sm-6 col-xs-6 mb-6 pro-gl-content">
+                                <div class="ec-product-inner">
+                                    <div class="ec-pro-image-outer">
+                                        <div class="ec-pro-image">
+                                            <a href="{% url 'user_productdetails' i.id %}">
+                                                <img  src="{{ i.image.url}}" alt="Product"></a>
+
+                                        </div>
+                                    </div>
+                                    <div class="ec-pro-content">
+                                        <h5 class="ec-pro-title"><a href="{% url 'user_productdetails' i.id %}">{{i.product_name}}
+                                            </a></h5>
+
+                                        <div class="ec-pro-list-desc">{{i.description}}</div>
+                                        <span class="ec-price">
+
+                                            <span class="new-price">{{i.price}}</span>
+                                        </span>
+                                        <div class="ec-pro-option">
+                                            <div class="ec-pro-color">
+                                                <span class="ec-pro-opt-label">Color</span>
+                                                <span class="ec-pro-opt-label">Size</span>
+                                            </div>
+                                            <!-- <div class="ec-pro-size">
+                                                
+                                                <ul class="ec-opt-size">
+
+                                                    <li class="active"><a href="#" class="ec-opt-sz" data-old="$12.00"
+                                                            data-new="$10.00" data-tooltip="Small">S</a></li>
+                                                    <li><a href="#" class="ec-opt-sz" data-old="$15.00"
+                                                            data-new="$12.00" data-tooltip="Medium">M</a></li>
+                                                    <li><a href="#" class="ec-opt-sz" data-old="$20.00"
+                                                            data-new="$17.00" data-tooltip="Extra Large">XL</a></li>
+                                                </ul>
+                                            </div> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div>
+                                <h2>no results found please try again</h2>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+                <!--compare content End -->
+            </div>
+            <!-- Compare Content end -->
+        </div>
+    </div>
+</section>
+{% endblock %}
+<!-- Footer Start -->
+
+<div class="single-pro-img single-pro-img-no-sidebar">
+    <div class="single-product-scroll">
+        <a class="ec-360-lbl" data-link-action="quickview" title="360 view"
+            data-bs-toggle="modal" data-bs-target="#ec_360_view_modal">
+            <img src="{%static 'assets/images/icons/360-degrees.png'%}" alt="view image">
+        </a>
+        <div class="single-product-cover">
+            <div class="single-slide zoom-image-hover">
+                <img class="img-responsive" src="{{ single_product.image.url}}"
+                    alt="">
+            </div>
+            <div class="single-slide zoom-image-hover">
+                <img class="img-responsive" src="{{ single_product.image1.url }}"
+                    alt="">
+            </div>
+            <div class="single-slide zoom-image-hover">
+                <img class="img-responsive" src="{{ single_product.image2.url }}"
+                    alt="">
+            </div>
+            <div class="single-slide zoom-image-hover">
+                <img class="img-responsive" src="{{ single_product.image3.url }}"
+                    alt="">
+            </div>
+
+        </div>
+        <div class="single-nav-thumb">
+            <div class="single-slide">
+                <img class="img-responsive" src="{{ single_product.image.url}}"
+                    alt="">
+            </div>
+            <div class="single-slide">
+                <img class="img-responsive" src="{{ single_product.image1.url }}"
+                    alt="">
+            </div>
+            <div class="single-slide">
+                <img class="img-responsive" src="{{ single_product.image2.url }}"
+                    alt="">
+            </div>
+            <div class="single-slide">
+                <img class="img-responsive" src="{{ single_product.image3.url }}"
+                    alt="">
+            </div>
+
+        </div>
+    </div>
+</div>

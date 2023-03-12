@@ -1,0 +1,243 @@
+<!-- ekka Cart End -->
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<!-- Ec breadcrumb start -->
+<div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row ec_breadcrumb_inner">
+                    <div class="col-md-6 col-sm-12">
+                        <h2 class="ec-breadcrumb-title">Shop</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <!-- ec-breadcrumb-list start -->
+                        <ul class="ec-breadcrumb-list">
+                            <li class="ec-breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="ec-breadcrumb-item active">Shop</li>
+                        </ul>
+                        <!-- ec-breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Ec breadcrumb end -->
+
+<!-- Page detail section -->
+<section class="ec-bnr-detail margin-bottom-30 section-space-pt">
+    <div class="ec-page-detail">
+        <div class="container">
+            <div class="ec-main-heading d-none">
+                <h2>Shop <span>Detail</span></h2>
+            </div>
+            <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="ec-cat-bnr">
+                        <a href="product-left-sidebar.html"></a>
+                    </div>
+                </div>
+                <div class="col-lg-6 col-md-12">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- End detail section -->
+<section class="page-title-section bg-img cover-background" data-background="{% static 'home/img/bg/page-title.jpg' %}">
+    <div class="container">
+
+
+        
+     
+
+    </div>
+</section>
+<!-- Ec Shop page -->
+<section class="ec-page-content-bnr section-space-pb">
+    <div class="container">
+        <div class="row">
+            <div class="ec-shop-rightside col-lg-9 col-md-12 order-lg-last order-md-first margin-b-30">
+
+                <div class="ec-pro-list-top d-flex">
+                    <div class="col-md-6 ec-grid-list">
+                        <div class="ec-gl-btn">
+                            <button class="btn btn-grid active"><img src="{%static 'assets/images/icons/grid.svg'%}"
+                                    class="svg_img gl_svg" alt="" /></button>
+                            <button class="btn btn-list"><img src="{%static 'assets/images/icons/list.svg'%}"
+                                    class="svg_img gl_svg" alt="" /></button>
+                        </div>
+                    </div>
+                  
+                </div>
+                <!-- Shop Top End -->
+                <!-- Shop content Start -->
+                <div class="shop-pro-content">
+                    <div class="shop-pro-inner">
+                        <div class="row">
+                            {% if products %}
+                            {% for i in products %}
+                            <div class="col-lg-3 col-md-6 col-sm-6 col-xs-6 mb-6 pro-gl-content">
+                                <div class="ec-product-inner">
+                                    <div class="ec-pro-image-outer">
+                                        <div class="ec-pro-image">
+                                            <a href="{{ i.get_url}}">
+                                                <img src="{{ i.image.url}}" alt="Product" /> </a>
+
+
+                                            <span class="product_name">{{i.product_name}}</span>
+                                            <a href="{% url 'user_productdetails' i.id %}" class="quickview"
+                                                data-link-action="quickview" title="Quick view" data-bs-toggle="modal"
+                                                data-bs-target="#ec_quickview_modal"><img src=" "
+                                                    class="svg_img pro_svg" alt="" /></a>
+                                            <div class="ec-pro-actions">
+                                                <a href="compare.html" class="ec-btn-group compare" title="Compare"><img
+                                                        src="{%static 'assets/images/icons/compare.svg'%}"
+                                                        class="svg_img pro_svg" alt="" /></a>
+                                                <button title="Add To Cart" class=" add-to-cart"><img
+                                                        src="{%static 'assets/images/icons/cart.svg'%}"
+                                                        class="svg_img pro_svg" alt="" /> Add To Cart</button>
+                                                <a class="ec-btn-group wishlist" title="Wishlist"><img
+                                                        src="{%static 'assets/images/icons/wishlist.svg'%}"
+                                                        class="svg_img pro_svg" alt="" /></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ec-pro-content">
+                                        <h5 class="ec-pro-title"><a
+                                                href="{% url 'user_productdetails' i.id %}">
+                                                </a></h5>
+                                        <div class="ec-pro-rating">
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star"></i>
+                                        </div>
+                                        <div class="ec-pro-list-desc"></div>
+                                        <span class="ec-price">
+                                            <span class="new-price">{{i.price}}</span>
+                                        </span>
+                                        <!-- <div class="ec-pro-option">
+                                            <div class="ec-pro-color">
+                                                <span class="ec-pro-opt-label">Color</span>
+                                                <ul class="ec-opt-swatch ec-change-img">
+                                                    <li class="active"><a href="#" class="ec-opt-clr-img"
+                                                            data-src="assets/images/product-image/6_1.jpg"
+                                                            data-src-hover="assets/images/product-image/6_1.jpg"
+                                                            data-tooltip="Gray"><span
+                                                                style="background-color:#e8c2ff;"></span></a></li>
+                                                    <li><a href="#" class="ec-opt-clr-img"
+                                                            data-src="assets/images/product-image/6_2.jpg"
+                                                            data-src-hover="assets/images/product-image/6_2.jpg"
+                                                            data-tooltip="Orange"><span
+                                                                style="background-color:#9cfdd5;"></span></a></li>
+                                                </ul>
+                                            </div>
+                                            <div class="ec-pro-size">
+                                                <span class="ec-pro-opt-label">Size</span>
+                                                <ul class="ec-opt-size">
+                                                    <li class="active"><a href="#" class="ec-opt-sz" data-old="$25.00"
+                                                            data-new="$20.00" data-tooltip="Small">S</a></li>
+                                                    <li><a href="#" class="ec-opt-sz" data-old="$27.00"
+                                                            data-new="$22.00" data-tooltip="Medium">M</a></li>
+                                                </ul>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            {% else %}
+                            <div>
+                                <h2>no results found please try again</h2>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <!-- Ec Pagination Start -->
+                    <div class="ec-pro-pagination">
+                        {% if products.has_other_pages %}
+                    <ul>
+                        {% if products.has_previous %}
+                        <li><a href="?page={{products.previous_page_number}}"><i
+                                    class="fas fa-long-arrow-alt-left me-1 d-none d-sm-inline-block"></i> Prev</a></li>
+                        {% else %}
+                        <li><a href="#"><i class="fas fa-long-arrow-alt-left me-1 d-none d-sm-inline-block"></i>
+                                Prev</a></li>
+                        {% endif %}
+                        {% for i in products.paginator.page_range %}
+                        {% if products.number == i %}
+                        <li class="active"><a href="#">{{i}}</a></li>
+                        {% else %}
+
+                        <li><a href="?page={{i}}">{{i}}</a></li>
+                        {% endif %}
+                        {% endfor %}
+
+                        {% if products.has_next %}
+
+                        <li><a href="?page={{products.next_page_number}}">Next <i
+                                    class="fas fa-long-arrow-alt-right ms-1 d-none d-sm-inline-block"></i></a></li>
+                        {% else %}
+
+
+                        <li><a href="#">Next <i
+                                    class="fas fa-long-arrow-alt-right ms-1 d-none d-sm-inline-block"></i></a></li>
+                        {% endif %}
+                    </ul>
+                    {% endif %}
+                    </div>
+                    
+                </div>
+                
+            </div>
+            
+            <div class="ec-shop-leftside col-lg-3 col-md-12 order-lg-first order-md-last">
+                <div class="widget">
+                    <div class="widget-title">
+                        <h5>Categories</h5>
+                    </div>
+                    {% for i in categories %}
+                    <div id="accordion" class="accordion-style2">
+                        <div class="card">
+                            <div class="card-header" id="headingOne">
+                                <h5 class="mb-0">
+                                    <button class="btn btn-link" data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                        aria-expanded="true" aria-controls="collapseOne">{{i.category_name}}</button>
+                                </h5>
+                            </div>
+                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+                                data-bs-parent="#accordion">
+                                <div class="card-body">
+                                    {% for j in sub %}
+                                    <ul class="list-unstyled">
+                                        <li><a
+                                                href="{% url 'products_by_sub_category' j.slug %}">{{j.sub_category_name}}</a>
+                                        </li>
+
+                                    </ul>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+                    {% endfor %}
+                </div>
+               
+            </div>
+        </div>
+    </div>
+  
+</section>
+
+{% endblock %}
+<!-- End Shop page -->

@@ -1,0 +1,355 @@
+{% extends 'base.html' %}
+
+{% block content %}
+{% load static %}
+
+<!-- Ec breadcrumb end -->
+
+<!-- Ec breadcrumb start -->
+<div class="sticky-header-next-sec  ec-breadcrumb section-space-mb">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="row ec_breadcrumb_inner">
+                    <div class="col-md-6 col-sm-12">
+                        <h2 class="ec-breadcrumb-title">Single Products</h2>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <!-- ec-breadcrumb-list start -->
+                        <ul class="ec-breadcrumb-list">
+                            <li class="ec-breadcrumb-item"><a href="index.html">Home</a></li>
+                            <li class="ec-breadcrumb-item active">Products</li>
+                        </ul>
+                        <!-- ec-breadcrumb-list end -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Sart Single product -->
+<section class="ec-page-content section-space-p">
+    <div class="container">
+        <div class="row">
+            <div class="ec-pro-rightside ec-common-rightside col-lg-12 col-md-12">
+
+                <!-- Single product content Start -->
+                <div class="row mb-6 mb-md-7 mb-lg-9">
+                    <div class="col-lg-6 text-center text-lg-start mb-1-9 mb-lg-0">
+                        <div class="single-pro-block">
+                            <div class="single-pro-inner">
+                                <div class="row">
+
+                                    <div class="col-12 col-md-12">
+                                        <div class="">
+                                            <div class="single-pro-img single-pro-img-no-sidebar">
+                                                <div class="single-product-scroll">
+                                                    <a class="ec-360-lbl" data-link-action="quickview" title="360 view"
+                                                        data-bs-toggle="modal" data-bs-target="#ec_360_view_modal">
+                                                        <img src=""
+                                                            alt="">
+                                                    </a>
+                                                    <div class="single-product-cover">
+                                                        <div class="single-slide zoom-image-hover">
+                                                            <img class="img-responsive"
+                                                                src="{{ single_product.image.url}}" alt="">
+                                                        </div>
+                                                        <div class="single-slide zoom-image-hover">
+                                                            <img class="img-responsive"
+                                                                src="{{ single_product.image1.url }}" alt="">
+                                                        </div>
+                                                        <div class="single-slide zoom-image-hover">
+                                                            <img class="img-responsive"
+                                                                src="{{ single_product.image2.url }}" alt="">
+                                                        </div>
+                                                        <div class="single-slide zoom-image-hover">
+                                                            <img class="img-responsive"
+                                                                src="{{ single_product.image3.url }}" alt="">
+                                                        </div>
+
+                                                    </div>
+                                                    <div class="single-nav-thumb">
+                                                        <div class="single-slide">
+                                                            <img class="img-responsive"
+                                                                src="{{ single_product.image.url}}" alt="">
+                                                        </div>
+                                                        <div class="single-slide">
+                                                            <img class="img-responsive"
+                                                                src="{{ single_product.image1.url }}" alt="">
+                                                        </div>
+                                                        <div class="single-slide">
+                                                            <img class="img-responsive"
+                                                                src="{{ single_product.image2.url }}" alt="">
+                                                        </div>
+                                                        <div class="single-slide">
+                                                            <img class="img-responsive"
+                                                                src="{{ single_product.image3.url }}" alt="">
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-md-6">
+                        <form action="{% url 'add_cart' single_product.id %}" method="POST">
+                            {% csrf_token %}
+                            <div class="single-pro-desc single-pro-desc-no-sidebar">
+                                <div class="single-pro-content">
+                                    <h2 class="mb-1">{{single_product.product_name }}<span
+                                            class="label-sale bg-primary text-white text-uppercase display-31"></span>
+                                    </h2>
+                                    <div class="bg-primary separator-line-horrizontal-full mb-4"></div>
+
+                                    <h5 class="ec-single-title"></h5>
+                                    <div class="ec-single-rating-wrap">
+                                        <div class="ec-single-rating">
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star fill"></i>
+                                            <i class="ecicon eci-star-o"></i>
+                                        </div>
+                                        <span class="ec-read-review"><a href="#ec-spt-nav-review">Be the
+                                                first
+                                                to
+                                                review this product</a></span>
+                                    </div>
+                                    <div class="mb-4">
+
+                                        <span
+                                            class="display-26 font-weight-700 text-primary">₹{{single_product.price}}</span>
+
+                                    </div>
+                                    <div class="ec-pro-variation">
+                                        <div class="ec-pro-variation-inner ec-pro-variation-size">
+                                            <span> Size </span>
+                                            <select class="mar-b-30 form-control medium form-select"
+                                                style="width:142px;" name="size" required>
+                                                <option value="" disabled selected>Choose Size</option>
+                                                {% for i in single_product.variations_set.sizes %}
+                                                <option value="{{i.variation_value | lower}}">{{i.variation_value | capfirst}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+                                    </div>
+
+
+
+
+                                    <div class="ec-pro-variation">
+
+                                        <div class="ec-pro-variation-inner ec-pro-variation-color">
+                                            <span> Color </span>
+                                            <select class="mar-b-30 form-control medium form-select"
+                                                style="width:152px;" name="color" required>
+                                                <option value="" disabled selected>Choose Color</option>
+                                                {% for i in single_product.variations_set.colors %}
+                                                <option value="{{i.variation_value  | lower}}">{{i.variation_value | capfirst}}</option>
+                                                {% endfor %}
+                                            </select>
+                                        </div>
+  
+                                    </div>
+
+                                </div>
+
+                                <!-- <div class="ec-single-sales">
+                                        <div class="ec-single-sales-inner">
+
+                                            <div class="ec-single-sales-countdown">
+                                                <div class="ec-single-countdown"><span
+                                                        id="ec-single-countdown"></span>
+                                                </div>
+                                                <div class="ec-single-count-desc">Time is Running Out!</div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                <!-- <div class="ec-single-price-stoke">
+                                        <div class="ec-single-price">
+                                            <span class="ec-single-ps-title">As low as</span>
+                                            <span class="new-price">$68.00</span>
+                                        </div>
+                                        <div class="ec-single-stoke">
+                                            <span class="ec-single-ps-title">IN STOCK</span>
+                                            <span class="ec-single-sku">SKU#: WH12</span>
+                                        </div>
+                                    </div> -->
+
+                                {% if single_product.stock == 0 %}
+                                <div class="ec-single-qty">
+                                    <h5 class="text-danger">OUT OF STOCK</h5>
+                                    <div class="ec-single-cart ">
+                                        {% else %}
+                                        <button type="submit" class="btn btn-primary">Add To Cart</button>
+
+                                    </div>
+
+                                    <!-- <div class="ec-single-wishlist">
+                                            <a class="ec-btn-group wishlist" title="Wishlist"><img
+                                                    src="{%static 'assets/images/icons/wishlist.svg'%}"
+                                                    class="svg_img pro_svg" alt="" /></a>
+                                        </div> -->
+                                    <!-- <div class="ec-single-quickview">
+                                            <a href="#" class="ec-btn-group quickview"
+                                                data-link-action="quickview" title="Quick view"
+                                                data-bs-toggle="modal"
+                                                data-bs-target="#ec_quickview_modal"><img
+                                                    src="{%static 'assets/images/icons/quickview.svg'%}"
+                                                    class="svg_img pro_svg" alt="" /></a>
+                                        </div> -->
+                                </div>
+                                {% endif %}
+                            </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <!--Single product content End -->
+            <!-- Single product tab start -->
+            <div class="ec-single-pro-tab">
+                <div class="ec-single-pro-tab-wrapper">
+                    <div class="ec-single-pro-tab-nav">
+                        <ul class="nav nav-tabs">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-details"
+                                    role="tablist">Detail</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-info"
+                                    role="tablist">More Information</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" data-bs-target="#ec-spt-nav-review"
+                                    role="tablist">Reviews</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="tab-content  ec-single-pro-tab-content">
+                        <div id="ec-spt-nav-details" class="tab-pane fade show active">
+                            <div class="ec-single-pro-tab-desc">
+                                <p>{{ product_description }}</p>
+                                <ul>
+                                    <li>Any Product types that You want - Simple, Configurable</li>
+                                    <li>Downloadable/Digital Products, Virtual Products</li>
+                                    <li>Inventory Management with Backordered items</li>
+                                    <li>Flatlock seams throughout.</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div id="ec-spt-nav-info" class="tab-pane fade">
+                            <div class="ec-single-pro-tab-moreinfo">
+                                <ul>
+                                    <li><span>Weight</span> 1000 g</li>
+                                    <li><span>Dimensions</span> 35 × 30 × 7 cm</li>
+                                    <li><span>Color</span> Black, Pink, Red, White</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div id="ec-spt-nav-review" class="tab-pane fade">
+                            <div class="row">
+                                <div class="ec-t-review-wrapper">
+                                    <div class="ec-t-review-item">
+                                        <div class="ec-t-review-avtar">
+                                            <img src="{%static 'assets/images/review-image/1.jpg'%}" alt="" />
+                                        </div>
+                                        <div class="ec-t-review-content">
+                                            <div class="ec-t-review-top">
+                                                <div class="ec-t-review-name">Jeny Doe</div>
+                                                <div class="ec-t-review-rating">
+                                                    <i class="ecicon eci-star fill"></i>
+                                                    <i class="ecicon eci-star fill"></i>
+                                                    <i class="ecicon eci-star fill"></i>
+                                                    <i class="ecicon eci-star fill"></i>
+                                                    <i class="ecicon eci-star-o"></i>
+                                                </div>
+                                            </div>
+                                            <div class="ec-t-review-bottom">
+                                                <p>Lorem Ipsum is simply dummy text of the printing and
+                                                    typesetting industry. Lorem Ipsum has been the industry's
+                                                    standard dummy text ever since the 1500s, when an unknown
+                                                    printer took a galley of type and scrambled it to make a
+                                                    type specimen.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="ec-t-review-item">
+                                        <div class="ec-t-review-avtar">
+                                            <img src="{%static 'assets/images/review-image/2.jpg'%}" alt="" />
+                                        </div>
+                                        <div class="ec-t-review-content">
+                                            <div class="ec-t-review-top">
+                                                <div class="ec-t-review-name">Linda Morgus</div>
+                                                <div class="ec-t-review-rating">
+                                                    <i class="ecicon eci-star fill"></i>
+                                                    <i class="ecicon eci-star fill"></i>
+                                                    <i class="ecicon eci-star fill"></i>
+                                                    <i class="ecicon eci-star-o"></i>
+                                                    <i class="ecicon eci-star-o"></i>
+                                                </div>
+                                            </div>
+                                            <div class="ec-t-review-bottom">
+                                                <p>Lorem Ipsum is simply dummy text of the printing and
+                                                    typesetting industry. Lorem Ipsum has been the industry's
+                                                    standard dummy text ever since the 1500s, when an unknown
+                                                    printer took a galley of type and scrambled it to make a
+                                                    type specimen.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="ec-ratting-content">
+                                    <h3>Add a Review</h3>
+                                    <div class="ec-ratting-form">
+                                        <form action="#">
+                                            <div class="ec-ratting-star">
+                                                <span>Your rating:</span>
+                                                <div class="ec-t-review-rating">
+                                                    <i class="ecicon eci-star fill"></i>
+                                                    <i class="ecicon eci-star fill"></i>
+                                                    <i class="ecicon eci-star-o"></i>
+                                                    <i class="ecicon eci-star-o"></i>
+                                                    <i class="ecicon eci-star-o"></i>
+                                                </div>
+                                            </div>
+                                            <div class="ec-ratting-input">
+                                                <input name="your-name" placeholder="Name" type="text" />
+                                            </div>
+                                            <div class="ec-ratting-input">
+                                                <input name="your-email" placeholder="Email*" type="email" required />
+                                            </div>
+                                            <div class="ec-ratting-input form-submit">
+                                                <textarea name="your-commemt"
+                                                    placeholder="Enter Your Comment"></textarea>
+                                                <button class="btn btn-primary" type="submit"
+                                                    value="Submit">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- product details description area end -->
+        </div>
+
+    </div>
+    </div>
+</section>
+<!-- End Single product -->
+{% endblock %}

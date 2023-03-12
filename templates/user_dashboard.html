@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% block title %} SMART SHOP {% endblock %}
+{% block content %}
+{% load static %}
+
+
+<!-- ========================= SECTION CONTENT ========================= -->
+<div class="row">
+
+    {% include 'dashboard_sidebar.html' %}
+<main class="col-12 col-md-9">
+
+    <article class="card">
+        
+            <header class="card-header">
+
+
+
+                <strong class="d-inline-block mr-3">Logged in as:</strong>
+                <span class="text-success">{{user.first_name}} {{user.last_name}}</span>
+
+            </header>
+            <div class="card-body" style="display:flexbox">
+
+
+                <div class="col-md-6 mt-2">
+                    <div class="card" style="text-align:center;">
+                        <div class="card-body">
+                            <h5 class="card-title">Total Orders<h5>
+                                    <h4>{{orders_count}}</h4>
+                                    <a href="{% url 'my_orders' %}">View order</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-2">
+                    <div class="card" style="text-align:center;">
+                        <div class="card-body">
+                            <h5 class="card-title">My Wallet Amount<h5>
+                                    <h6 class="card-title">espanshe <h6>
+                                            <h4 class="text-success">₹ {{userprofile.wallet}}</h4>
+                                            
+                                            <form action="{% url 'add_amount' %}" method="post">
+                                                <div class="form-group m-2">
+                                                    <label>add amount to wallet</label>
+                                                    <input type="text" name="amount"  class="form-control m-2" required id="amount">
+                                                    <a class="" href=""><button type="submit"
+                                                        class="btn btn-primary">Add</button></a>
+                                                </div>
+                                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 mt-2">
+                    <div class="card" style="text-align:center;display: flex;justify-content: center;">
+                        <div class="card-body">
+
+                            {% if userprofile.profile_picture.url != '' %}
+                            <img src="{{userprofile.profile_picture.url}}" alt="user profile pitcure" width="50"
+                                height="50" style="border-radius:50%">
+                            {% endif %}
+                            <p class="mb-0">{{user.email}}</p>
+                            <p>{{user.phone}}</p>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        
+
+    </article>
+
+</main>
+</div>
+{% endblock %}

@@ -1,0 +1,138 @@
+{% extends 'base.html' %}
+{% block content %}
+{% load static %}
+
+
+<div class="container" style="margin-top: 50px;">
+    <i class="fas fa-check-circle" style="font-size: 72px;margin-bottom: 20px;color: #28A745;"></i>
+    <h2 class="text-center">Payment Successful</h2>
+    <br>
+    <div class="text-center">
+        <a href="{% url 'user_products' %}" class="btn btn-success">Shop more</a>
+    </div>
+</div>
+
+<section class="order_details section_gap">
+    <div class="container">
+    <div class="d-flex justify-content-center">
+     <img width="100px"  src="" alt="">
+     </div>
+        <h3 class="title_confirmation" style="margin-top: 29px;">Thank you. Your order has been received.</h3>
+        <div class="row order_d_inner">
+            <div class="col-lg-6">
+                <div class="details_item">
+                    <h4>Order Info</h4>
+                    <ul class="list">
+                        <li><a href="#"><span>Order number</span> : {{order_number}}</a></li>
+                        <li><a href="#"><span>Order Date</span> : {{order.created_at}}</a></li>
+                        <li><a href="#"><span>Payment method</span> : {{payment.payment_method}}</a></li>
+                        <li><a href="#"><span>Transaction ID</span> : {{transID}}</a></li>
+                        <li><a href="#"><span> payment status</span> : {{payment.status}}</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="details_item">
+                    <h4>Shipping Address</h4>
+                    <ul class="list">
+                        <li><a href="#"><span>Name</span> : {{order.full_name}}</a></li>
+                        <li><a href="#"><span>Address</span> : {{order.full_address}}</a></li>
+                        <li><a href="#"><span>City</span> : {{order.city}}</a></li>
+                        <li><a href="#"><span>Country</span> : {{order.country}}</a></li>
+                        <li><a href="#"><span>Email </span> : {{order.email}}</a></li>
+                        <li><a href="#"><span>Mob </span> : {{order.phone}}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="order_details_table">
+            <h2>Order Details</h2>
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col"><strong>Product</strong></th>
+                            <th scope="col"><strong>Quantity</strong></th>
+                             <th scope="col"><strong>Total</strong></th>
+                        </tr>
+                     </thead>
+                    <tbody>
+                    {% for item in ordered_products %}
+                        <tr>
+                            <td>{{item.product.product_name}}
+                                <p class = "text-primary small">
+                                 {% if item.variations.all %}
+                              {% for i in item.variations.all %}
+                            {{i.variation_category | capfirst}} : {{i.variation_value | capfirst}} <br>
+                             {% endfor %}
+
+                              {% endif %}</p>
+                            </td>
+                            <td>
+                                <h5>{{item.quantity}}</h5>
+                            </td>
+                            <td>
+                                <p>₹{{item.sub_total}}</p>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td>
+                                <h4>Net total</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p>₹{{total}}</p>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <h4>Tax</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p>₹{{tax}}</p>
+                            </td>
+                        </tr>
+<!-- 
+                         {% if order.order_discount %}
+                        <tr>
+                        
+
+                            <td>
+                                <h4 class="text-warning">Discount</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p class="text-warning">- ₹{{order.order_discount}} </p>
+                            </td>
+                                            
+                            </tr>
+                            {% endif %} -->
+                        <tr>
+                            <td>
+                                <h4>Grand total</h4>
+                            </td>
+                            <td>
+                                <h5></h5>
+                            </td>
+                            <td>
+                                <p style="color:red;">₹{{order.order_total}}</p>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<!--================End Order Details Area =================-->
+
+
+{% endblock %}

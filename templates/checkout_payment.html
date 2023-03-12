@@ -1,0 +1,310 @@
+{% extends 'base.html' %}
+{% block title %} SMART SHOP {% endblock %}
+{% block content %}
+{% load static %}
+<!-- PAGE TITLE
+        ================================================== -->
+<section class="page-title-section bg-img cover-background" data-background="{% static 'home/img/bg/page-title.jpg' %}">
+    <div class="container">
+
+        <div class="title-info">
+            <h1>Shop Checkout</h1>
+        </div>
+        <div class="breadcrumbs-info">
+            <ul class="ps-0">
+                <li><a href="home-shop-1.html">Home</a></li>
+                <li><a href="#">Shop Checkout</a></li>
+            </ul>
+        </div>
+
+    </div>
+</section>
+
+<!-- CHECKOUT
+        ================================================== -->
+<section class="md">
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <div class="process-steps mb-1-9 mb-lg-6">
+                    <a class="step" href="{% url 'checkout' %}"><i class="ti-direction-alt"></i>
+                        <h4 class="step-title">1. Address</h4>
+                    </a>
+
+                    <a class="step active" href="shop-checkout-payment.html"><i class="ti-wallet"></i>
+                        <h4 class="step-title">2. Payment</h4>
+                    </a>
+                    <a class="step" href="shop-checkout-review.html"><i class="ti-check-box"></i>
+                        <h4 class="step-title">3. Review</h4>
+                    </a>
+                </div>
+            </div>
+
+            <!-- left pannel section -->
+            <div class="col-lg-9 col-md-12 ps-2-3 mb-1-9 mb-lg-0">
+                <h4 class="text-center mb-5">Review Your Order and Make Payment</h4>
+
+                {% for cart_item in cart_items %}
+
+                {% endfor %}<div class="card ">
+
+                    <div class="card-body">
+
+                        <div class="card-header">
+                            Billing Address
+                        </div>
+                        <div class="card-body">
+
+                            <p class="card-text mb-0">{{order.first_name}} {{order.last_name}}
+                            <p class="card-text  mb-0">{{order.address_line_1}} {{order.address_line_2}}
+                            <p class="card-text mb-0">{{order.city}} {{order.state}}
+                            <p class="card-text mb-0">{{order.country}} {{order.pin}}</p>
+                            <p class="card-text mb-0">{{order.email}}</p>
+                            <p class="card-text mb-0">{{order.phone}}</p>
+
+                        </div>
+
+
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Product</th>
+                                    <th scope="col"></th>
+                                    <th scope="col">Quantity</th>
+                                    <th scope="col">Total</th>
+
+
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for cart_item in cart_items %}
+                                <tr>
+                                    <td>
+                                        <div class="media">
+                                            <div class="d-flex">
+                                                <a href="#"> <img src="{{ cart_item.product.image1.url }}"
+                                                        style="width:70px;height:70px" alt=""></a>
+                                            </div>
+                                            <div class="media-body" style="margin-left:10px;">
+                                                <p class="text-primary medium">{{ cart_item.product.product_name }}</p>
+                                                <p class="text-danger small" style="margin-top: -21px;">
+                                                    {% if cart_item.variations.all %}
+                                                    {% for item in cart_item.variations.all %}
+                                                    {{ item.variation_category | capfirst }} : {{ item.variation_value|capfirst }} <br>
+                                                    {% endfor %}
+                                                    {% endif %}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <h5></h5>
+                                    </td>
+                                    <td>
+                                        <p class="card-text">{{ cart_item.quantity }}</p>
+                                    </td>
+                                    <td>
+                                        <h5>₹{{ cart_item.sub_total }}</h5>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+
+
+
+                            </tbody>
+                        </table>
+                          
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+            <!-- end left pannel section -->
+
+            <!-- right pannel section -->
+            <div class="col-lg-3 col-12 side-bar">
+
+                <div class="widget">
+
+                    <div class="widget-title">
+                        <h5>Order Summary</h5>
+                    </div>
+
+                    <table class="table classic">
+                        <tbody>
+                            <tr>
+                                <th>Cart Subtotal:</th>
+                                <td class="text-gray-dark">₹{{total}}</td>
+                            </tr>
+                            <tr>
+                                <th>Shipping:</th>
+                                <td class="text-gray-dark">₹26.50</td>
+                            </tr>
+                            <tr>
+                                <th>Estimated tax:</th>
+                                <td class="text-gray-dark">₹{{tax}}</td>
+                            </tr>
+                            <tr>
+                                <th>Total:</th>
+                                <td class="text-lg text-gray-dark">₹{{grand_total}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+                <!-- Button trigger modal -->
+                {% if profile.wallet >= order.order_total %}
+                <!-- <button type="submit" data-toggle="modal" data-target="#b{{i.id}}" class="btn btn-success btn-lg btn-block mb-2">
+                Wallet Payment
+                </button> -->
+                <button type="button" class="btn btn-info" data-bs-toggle="modal" style="width:100%;"
+                data-bs-target="#b{{i.id}}">
+                wallet payment
+            </button>
+                {% endif %}
+                <button type="button" class="btn btn-danger" data-bs-toggle="modal" style="width:100%;"
+                data-bs-target="#a{{i.id}}">
+                Cash On Delivary
+            </button>
+            
+
+            <!-- Modal -->
+            <div class="modal fade" id="a{{i.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="exampleModalLabel">payment confirmation</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            You are Choosed Cash On Delivary ?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <a href="{% url 'cash_on_delivery' order_number %}"><button type="button" class="btn btn-primary">Proceed</button></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+                
+                <div id="paypal-button-container">
+                    <!-- Paypal BUtton Will Load -->
+                </div>
+
+
+
+            </div>
+            <div class="modal fade" id="b{{i.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">payment confirmation</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                  <h5 class="modal-title" id="exampleModalLabel">You are choosed Wallet payment</h5>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <a href="{% url 'wallet' order_number %}"><button type="button" class="btn btn-primary">Proceed</button></a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <!-- end right pannel section -->
+
+        </div>
+    </div>
+</section>
+<script
+    src="https://www.paypal.com/sdk/js?client-id=Aac2ynGJVjmsp9_TJCAYUwRaidyaZCVptGRg5MclcnXKSC5yJMts2ZmYabpSyOv9xgd9VzfXHyxxwaAm&currency=USD"></script>
+<script>
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var amount = "{{grand_total}}"
+    var url = "{% url 'payments' %}"
+    var csrftoken = getCookie('csrftoken');
+    var orderID = "{{order.order_number}}"
+    var payment_method = 'Paypal'
+    var redirect_url = "{% url 'order_complete' %}"
+
+    // wait for on load event to ensure the JS SDK is loaded
+    window.addEventListener('load', (event) => {
+        var options = {
+            createOrder: function (data, actions) {
+                // This function sets up the details of the transaction, including the amount and line item details. 
+                return actions.order.create({
+                    purchase_units: [{
+                        amount: {
+                            value: amount,
+                        }
+                    }]
+                });
+            },
+            onApprove: function (data, actions) {
+                // This function captures the funds from the transaction. 
+                return actions.order.capture().then(function (details) {
+                    // This function shows a transaction success message to your buyer. 
+                    console.log(details);
+
+
+                    sendData();
+                    function sendData() {
+                        fetch(url, {
+                            method: "POST",
+                            headers: {
+                                "Content-type": "application/json",
+                                "X-CSRFToken": csrftoken,
+                            },
+                            body: JSON.stringify({
+                                orderID: orderID,
+                                transID: details.id,
+                                status: details.status,
+                                payment_method: payment_method,
+                            }),
+
+                        })
+                            .then((response) => response.json())
+                            .then((data) => {
+
+                                window.location.href = redirect_url + '?order_number=' + data.order_number + '&payment_id=' + data.transID;
+                            });
+                    }
+                })
+            }
+        };
+        // This function displays Smart Payment Buttons on your web page. 
+        window.paypal.Buttons(options).render('#paypal-button-container');
+    });
+</script>
+
+
+
+
+
+
+
+
+
+{% endblock %}

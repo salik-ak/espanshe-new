@@ -1,0 +1,64 @@
+{% extends 'adminbase.html' %}
+
+{% block content %}
+{% load static %}
+{% load crispy_forms_tags %}
+<!-- CONTENT WRAPPER -->
+<div class="ec-content-wrapper ">
+    <div class="content">
+        <div class="breadcrumb-wrapper breadcrumb-wrapper-2 breadcrumb-contacts">
+            <h1> ADD NEW SUBCATEGORY</h1>
+            <p class="breadcrumbs"><span><a href="index.html">Home</a></span>
+                <span><i class="mdi mdi-chevron-right"></i></span>Add category
+            </p>
+        </div>
+        <div class="row">
+            <div class="d-flex align-items-center">
+                <div class="ec-cat-list card card-default mb-24px ">
+                    <div class="card-body  ">
+                        <div class="ec-cat-form">
+                            <h4>Add New SubCategory</h4>
+
+                            <form action="" method="POST">
+                                {% csrf_token %}
+                                {{form|crispy}}
+                                <!-- <div class="form-group row">
+									<label class="col-12 col-form-label">Full Description</label>
+									<div class="col-12">
+										<textarea id="fulldescription" name="fulldescription" cols="40" rows="4"
+											class="form-control"></textarea>
+									</div>
+								</div> -->
+
+                                <!-- <div class="form-group row">
+                                    <label class="col-12 col-form-label">Product Tags <span>( Type and
+                                            make comma to separate tags )</span></label>
+                                    <div class="col-12">
+                                        <input type="text" class="form-control" id="group_tag" name="group_tag" value=""
+                                            placeholder="" data-role="tagsinput">
+                                    </div>
+                                </div> -->
+
+                                <div class="row">
+                                    <div class="col-12">
+                                        <button name="submit" type="submit" class="btn btn-primary">Submit</button>
+                                    </div>
+                                </div>
+
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script>
+    document.getElementById("id_sub_category_name").onkeyup = function () {
+        document.getElementById("id_slug").value = document.getElementById("id_sub_category_name").value.toLowerCase().replaceAll(" ", "-");
+    }
+</script>
+
+{% endblock %}
