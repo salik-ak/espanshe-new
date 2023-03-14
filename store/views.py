@@ -109,15 +109,15 @@ def search(request):
 
 def user_productdetails(request,product_slug):
 
-    
-    
     single_product = Product.objects.get(slug=product_slug)
     
     
-
-    in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(
-        request), product=single_product).exists()
+    in_cart = CartItem.objects.filter(cart__cart_id=_cart_id(request), product=single_product).exists()
+    
+    
     product_description = single_product.description
+
+
 
     context = {
         'single_product': single_product,

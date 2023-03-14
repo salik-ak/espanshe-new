@@ -39,12 +39,11 @@
                                     <h6 class="card-title">espanshe <h6>
                                             <h4 class="text-success">₹ {{userprofile.wallet}}</h4>
                                             
-                                            <form action="{% url 'add_amount' %}" method="post">
+                                            <form action="{% url 'add_amount' %}" method="post" onsubmit="return validateForm()">
                                                 <div class="form-group m-2">
                                                     <label>add amount to wallet</label>
-                                                    <input type="text" name="amount"  class="form-control m-2" required id="amount">
-                                                    <a class="" href=""><button type="submit"
-                                                        class="btn btn-primary">Add</button></a>
+                                                    <input type="text" name="amount" class="form-control m-2" id="amount">
+                                                    <button type="submit" class="btn btn-primary">Add</button>
                                                 </div>
                                             </form>
                         </div>
@@ -73,4 +72,14 @@
 
 </main>
 </div>
+<script>
+    function validateForm() {
+        var amount = document.getElementById("amount").value;
+        if (isNaN(amount) || amount <= 0) {
+            alert("Please enter a valid positive number for the amount");
+            return false;
+        }
+        return true;
+    }
+    </script>
 {% endblock %}

@@ -172,40 +172,7 @@ def my_cart(request, total=0, quantity=0, cart_items=0):
     return render(request, 'my_cart.html', context)
 
 
-def remove_cart_item(request, product_id, cart_item_id):
 
-    product = get_object_or_404(Product, id=product_id)
-    if request.user.is_authenticated:
-        cart_item = CartItem.objects.get(
-            product=product, user=request.user, id=cart_item_id)
-    else:
-        cart = Cart.objects.get(cart_id=_cart_id(request))
-        cart_item = CartItem.objects.get(
-            product=product, cart=cart, id=cart_item_id)
-    cart_item.delete()
-    return redirect('my_cart')
-
-
-def remove_cart(request, product_id, cart_item_id):
-
-    product = get_object_or_404(Product, id=product_id)
-    try:
-        if request.user.is_authenticated:
-            cart_item = CartItem.objects.get(
-                product=product, user=request.user, id=cart_item_id)
-        else:
-            cart = Cart.objects.get(cart_id=_cart_id(request))
-            cart_item = CartItem.objects.get(
-                product=product, cart=cart, id=cart_item_id)
-
-        if cart_item.quantity > 1:
-            cart_item.quantity -= 1
-            cart_item.save()
-        else:
-            cart_item.delete()
-    except:
-        pass
-    return redirect('my_cart')
 
 @login_required(login_url='user_login')
 def checkout(request,total=0,quantity=0,cart_items=None):
@@ -269,6 +236,7 @@ def incqnty(request):
   tax= 0
   grand_total = 0
   cart_count = 0
+  out_of_stock = False
   try:
     print('1 try')
     if request.user.is_authenticated:
@@ -276,9 +244,62 @@ def incqnty(request):
     else:
       cart = Cart.objects.get(cart_id=_cart_id(request))
       cart_item = CartItem.objects.get(product=product, cart=cart, id=cart_item_id)
+
+    if cart_item.quantity == cart_item.product.stock:
+      out_of_stock = True
     
     if cart_item.quantity < cart_item.product.stock:
       cart_item.quantity  += 1
+      cart_item.save()
+    
+    total = 0 
+    sub_total = cart_item.sub_total()
+    print('halo error')
+    cart_items = CartItem.objects.filter(user=request.user, is_active=True)
+    print(cart_item.quantity)
+    print('hai error')
+    for cart_ite in cart_items:
+        total += int(cart_ite.product.price)*int(cart_ite.quantity)
+    
+    tax = (5 * total)/100
+    grand_total = total + tax
+    grand_total = format(grand_total, '.2f')
+  except:
+    pass
+  return JsonResponse(
+          {'success': True,
+           'qnty':cart_item.quantity,
+           'sub_total':sub_total,
+           'cart_count':cart_count,
+           'total':total,
+           'tax':tax,
+           'grand_total':grand_total,
+           'out_of_stock':out_of_stock
+           },
+          safe=False
+        )
+
+def decqnty(request):
+  print('1 try')
+  if request.method == 'POST':
+    product_id = request.POST['pid']
+    cart_item_id = request.POST['cid']
+  product = get_object_or_404(Product, id=product_id)
+  print('2 try')
+  tax= 0
+  grand_total = 0
+  cart_count = 0
+  try:
+    print('3 try')
+    if request.user.is_authenticated:
+      cart_item = CartItem.objects.get(product=product, user=request.user, id=cart_item_id)
+    else:
+      cart = Cart.objects.get(cart_id=_cart_id(request))
+      cart_item = CartItem.objects.get(product=product, cart=cart, id=cart_item_id)
+    
+    
+    if cart_item.quantity > 1: 
+      cart_item.quantity  -= 1
       cart_item.save()
     total = 0 
     sub_total = cart_item.sub_total()
@@ -306,7 +327,7 @@ def incqnty(request):
           safe=False
         )
 
-def decqnty(request):
+def remove_cart_item(request):
   if request.method == 'POST':
     product_id = request.POST['pid']
     cart_item_id = request.POST['cid']
@@ -321,23 +342,24 @@ def decqnty(request):
     else:
       cart = Cart.objects.get(cart_id=_cart_id(request))
       cart_item = CartItem.objects.get(product=product, cart=cart, id=cart_item_id)
-    
-    if cart_item.quantity < cart_item.product.stock:
-      if cart_item.quantity > 1: 
-        cart_item.quantity  -= 1
-        cart_item.save()
+
     total = 0 
     sub_total = cart_item.sub_total()
     print('halo error')
     cart_items = CartItem.objects.filter(user=request.user, is_active=True)
     print(cart_item.quantity)
-    print('hai error')
+    print('hai sub')
+    print(sub_total)
+    print(total)
     for cart_ite in cart_items:
         total += int(cart_ite.product.price)*int(cart_ite.quantity)
-    
+        cart_count += cart_ite.quantity
+    print(cart_count)
+    total = total - sub_total
     tax = (5 * total)/100
     grand_total = total + tax
     grand_total = format(grand_total, '.2f')
+    cart_item.delete()
   except:
     pass
   return JsonResponse(
@@ -351,4 +373,5 @@ def decqnty(request):
            },
           safe=False
         )
+
 
