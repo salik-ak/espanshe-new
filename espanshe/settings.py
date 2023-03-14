@@ -26,7 +26,7 @@ SECRET_KEY = 'django-insecure-#pd91!e6i4j3$@x8w(dyyvv4-th72*+ss!&#fcx6&y5p!6ll79
 DEBUG = True
 
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', "ekkaespanshe.store"]
 
 
 # Application definition
