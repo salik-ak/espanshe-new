@@ -290,9 +290,22 @@
                                     <input type="text" name="coupon" id="coupon_code1" style="display: none;">
                                 </li>
                             </ul>
-                            <button type="submit" class="btn btn-warning btn-lg btn-block mb-2">
+                            <!-- <button type="submit" class="btn btn-warning btn-lg btn-block mb-2">
                                 Place order
+                            </button> -->
+                            {% if  not address %}
+                            <button
+                              type="submit"
+                              class="btn btn-danger btn-lg btn-block mb-2" disabled>
+                              Add a address in above feild
                             </button>
+                            {% else %}
+                            <button
+                              type="submit"
+                              class="btn btn-warning btn-lg btn-block mb-2">
+                              Place order
+                            </button>
+                            {% endif %}
                         </div>
                     </div>
                 </div>
@@ -364,10 +377,7 @@
 
 
 
-                                        {% for message in messages %}
-                                        <hr />
-                                        <p class="text-danger">{{message}}</p>
-                                        {% endfor%}
+                                       
 
                                 </div>
                             </div> <!-- row.// -->

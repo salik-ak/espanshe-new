@@ -168,7 +168,7 @@ def deleteCheckoutAddress(request, id):
     return redirect('checkout')
 
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def user_dashboard(request):
     orders = Order.objects.order_by('-created_at').filter(
         user_id=request.user.id, is_ordered=True)
@@ -187,7 +187,7 @@ def user_dashboard(request):
     }
     return render(request, 'user_dashboard.html', context)
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def editAddress(request, id):
     address = Address.objects.get(id=id)
     if request.method == 'POST':
@@ -221,7 +221,7 @@ def my_orders(request):
     return render(request, 'my_orders.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def user_dashboard(request):
     orders = Order.objects.order_by('-created_at').filter(
         user_id=request.user.id, is_ordered=True)
@@ -241,7 +241,7 @@ def user_dashboard(request):
     return render(request, 'user_dashboard.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def edit_profile(request):
     userprofile = get_object_or_404(UserProfile, user=request.user)
     if request.method == 'POST':
@@ -266,7 +266,7 @@ def edit_profile(request):
     }
     return render(request, 'edit_profile.html', context)
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def order_detail(request, order_id):
     order_detail = OrderProduct.objects.filter(order__order_number=order_id)
     order = Order.objects.get(order_number=order_id)
@@ -282,7 +282,7 @@ def order_detail(request, order_id):
     }
     return render(request, 'order_detail.html', context)
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def change_password(request):
     if request.method == 'POST':
         current_password = request.POST['current_password']
@@ -305,7 +305,7 @@ def change_password(request):
             return redirect('change_password')
     return render(request, 'change_password.html')
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def myAddress(request):
     current_user = request.user
     address = Address.objects.filter(user=current_user)
@@ -316,7 +316,7 @@ def myAddress(request):
     return render(request, 'myAddress.html', context)
 
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def addAddress(request):
     if request.method == 'POST':
         form = AddressForm(request.POST, request.FILES,)
@@ -346,7 +346,7 @@ def addAddress(request):
         }
     return render(request, 'addAddress.html', context)
 
-@login_required(login_url='login')
+@login_required(login_url='user_login')
 def deleteAddress(request, id):
     address = Address.objects.get(id=id)
     messages.success(request, "Address Deleted")
