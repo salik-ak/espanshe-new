@@ -80,7 +80,7 @@ def place_order(request, total=0, quantity=0):
             pass
 
         order = Order.objects.get(user=current_user, is_ordered=False, order_number=order_number)
-        profile = UserProfile.objects.get(user=request.user)
+        # profile = UserProfile.objects.get(user=request.user)
         context = {
             'order': order,
             'cart_items': cart_items,
@@ -89,7 +89,7 @@ def place_order(request, total=0, quantity=0):
             'coupon_discount': coupon_discount,
             'grand_total': grand_total,
             'order_number': order_number,
-            'profile':profile
+            # 'profile':profile
 
 
         }
@@ -114,7 +114,7 @@ def cash_on_delivery(request, id):
         tax = (2*total)/100
         shipping = (2*total)/100
         grand_total = order.order_total
-        order.order_total = grand_total
+        order.order_total = grand_total        
         order.save()
         
         payment = Payment(

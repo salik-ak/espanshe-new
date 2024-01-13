@@ -48,7 +48,7 @@ class CustomUser(AbstractUser):
 
 
 class UserProfile(models.Model):
-    user = models.OneToOneField(CustomUser,on_delete=models.CASCADE)
+    user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
     address_line_1 = models.CharField(blank=True,max_length=100,null=True)
     address_line_2 = models.CharField(blank=True,max_length=100,null=True)
     profile_picture = models.ImageField(blank=True,upload_to='userprofile',null=True)

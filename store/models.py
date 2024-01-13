@@ -14,7 +14,7 @@ class Product(models.Model):
     image2 = models.ImageField(upload_to='product')
     image3 = models.ImageField(upload_to='product')
     stock = models.IntegerField()
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)  
     sub_category = models.ForeignKey(Sub_Category, on_delete=models.CASCADE)
     description = models.TextField(max_length=500, blank=True)
     is_available = models.BooleanField(default=True)
